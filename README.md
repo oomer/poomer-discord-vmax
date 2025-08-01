@@ -69,6 +69,7 @@ install_name_tool -change /usr/local/lib/libplist-2.0.4.dylib @rpath/libplist-2.
 ## Linux 
 
 ```
+sudo apt install build-essential autoconf automake libtool pkg-config
 mkdir workdir
 curl -LO https://downloads.bellarender.com/bella_engine_sdk-25.3.0-linux.tar.gz
 tar -xvf  bella_engine_sdk-25.3.0-linux.tar.gz

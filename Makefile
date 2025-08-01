@@ -48,7 +48,7 @@ else
     # Linux configuration
     SDK_LIB_EXT          = so
     LZFSE_LIB_NAME       = liblzfse.$(SDK_LIB_EXT)
-    PLIST_LIB_NAME       = libplist.$(SDK_LIB_EXT)
+    PLIST_LIB_NAME       = libplist-2.0.$(SDK_LIB_EXT)
     USD_LIB_NAME         = libdl_usd_ms.$(SDK_LIB_EXT)
     
     # Compiler settings
@@ -62,7 +62,7 @@ else
     LINKER_FLAGS         = $(ARCH_FLAGS) -fvisibility=hidden -O3 -Wl,-rpath,'$$ORIGIN' -Wl,-rpath,'$$ORIGIN/lib'
     
     # Platform-specific libraries
-    PLIST_LIB            = -lplist
+    PLIST_LIB            = -lplist-2.0
 endif
 
 # Common include and library paths

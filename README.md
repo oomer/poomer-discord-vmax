@@ -1,24 +1,10 @@
-# vmax2bella
+# poomer-discord-vmax
 
-Command line convertor from [VoxelMax](https://voxelmax.com) .vmax to DiffuseLogic's [Bella](https://bellarender.com) .bsz
+C++ Learning prototype Discord bot that converts [VoxelMax](https://voxelmax.com) .vmax.zip to DiffuseLogic's [Bella](https://bellarender.com) .bsz, renders and returns jpeg
 
 ![example](resources/example.jpg)
 
-
-# Precompiled binaries ( Alpha release )
-[MacOS](https://a4g4.c14.e2-1.dev/vmax2bella/vmax2bella_macuniversal_0.1.zip)
-
-[Windows](https://a4g4.c14.e2-1.dev/vmax2bella/vmax2bella_win_alpha0.1.zip)
-
-
 # Usage
-
-```
-./vmax2bella -h  // show help
-./vmax2bella -i:bear.vmax // convert bear.vmax to bear.bsz using cubes
-./vmax2bella -i:bear.vmax --mode:mesh // convert to bear.bsz using mesh
-./vmax2bella -i:bear.vmax --mode:mesh --bevel // convert to bear.bsz using mesh and bevel shader
-```
 
 VoxelMax features supported
 - metallness converted to Bella metal quickmaterial (not PBR), roughness supported
@@ -29,13 +15,6 @@ VoxelMax features supported
 - roughness > 0 converted to Bella Plastic
 - emitter supported
 
-Load **bear.bsz** into [bella_gui](https://bellarender.com/builds) for rendering
-
-- [TODO] convert scene.json camera
-- [TODO] output one .bsz file per chunk timeline for anim
-- [TODO] convert chunk camera for anim
-
-
 # Build
 
 ```
@@ -44,7 +23,7 @@ workdir/
 ├── libplist/
 ├── lzfse/
 ├── opengametools/
-└── vmax2bella/
+└── poomer-discord-vmax/
 ```
 
 # MacOS
@@ -80,11 +59,11 @@ install_name_tool -id @rpath/libplist-2.0.4.dylib src/.libs/libplist-2.0.4.dylib
 cd ..
 git clone https://github.com/jpaver/opengametools.git
 git clone https://git.indoodle.com/oomer/oom.git
-git clone https://git.indoodle.com/oomer/vmax2bella.git
-cd vmax2bella
-make all -j4
-install_name_tool -change ../lzfse/build/liblzfse.dylib @rpath/liblzfse.dylib bin/Darwin/release/vmax2bella
-install_name_tool -change /usr/local/lib/libplist-2.0.4.dylib @rpath/libplist-2.0.4.dylib bin/Darwin/release/vmax2bella
+git clone https://git.indoodle.com/oomer/poomer-discord-vmax.git
+cd poomer-discord-vmax
+make all -j
+install_name_tool -change ../lzfse/build/liblzfse.dylib @rpath/liblzfse.dylib bin/Darwin/release/poomer-discord-vmax
+install_name_tool -change /usr/local/lib/libplist-2.0.4.dylib @rpath/libplist-2.0.4.dylib bin/Darwin/release/poomer-discord-vmax
 ```
 
 ## Linux 
@@ -106,13 +85,13 @@ make -j4
 cd ..
 git clone https://github.com/jpaver/opengametools.git
 git clone https://git.indoodle.com/oomer/oom.git
-git clone https://git.indoodle.com/oomer/vmax2bella.git
-cd vmax2bella
+git clone https://github.com/oomer/poomer-discord-vmax.git
+cd poomer-discord-vmax
 make all -j4
 ```
 
 ## Windows (win10) 
-- [optioanl] Install https://git-scm.com
+- [optional] Install https://git-scm.com
 
 - Download Visual Studio Community Edition 2022
 - Run VisualStudioSetup.exe
@@ -136,7 +115,7 @@ git clone https://git.indoodle.com/oomer/libplist
 cd libplist
 msbuild libplist.vcxproj /p:Configuration=release /p:Platform=x64 /p:PlatformToolset=v143
 cd ..
-git clone https://git.indoodle.com/oomer/vmax2bella.git
-cd vmax2bella
-msbuild vmax2bella.vcxproj /p:Configuration=release /p:Platform=x64 /p:PlatformToolset=v143
+git clone https://github.com/oomer/poomer-discord-vmax.git
+cd poomer-discord-vmax
+msbuild poomer-discord-vmax.vcxproj /p:Configuration=release /p:Platform=x64 /p:PlatformToolset=v143
 ```

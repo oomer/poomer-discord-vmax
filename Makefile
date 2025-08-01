@@ -77,10 +77,17 @@ DPP_BUILD_DIR      = $(DPP_PATH)/build/library
 ifeq ($(PLATFORM), Darwin)
     DPP_VERSIONED_FILE = libdpp.$(DPP_VERSION).$(SDK_LIB_EXT)
     DPP_LIB_NAME = libdpp.$(SDK_LIB_EXT)
+    PLIST_VERSIONED_FILE = libplist-2.0.4.$(SDK_LIB_EXT)
+    PLIST_LINK_NAME = libplist-2.0.$(SDK_LIB_EXT)
 else
     DPP_VERSIONED_FILE = libdpp.$(SDK_LIB_EXT).$(DPP_VERSION)
     DPP_LIB_NAME = libdpp.$(SDK_LIB_EXT)
-endif# Library flags
+    PLIST_VERSIONED_FILE = libplist-2.0.so.4.7.0
+    PLIST_LINK_NAME = libplist-2.0.$(SDK_LIB_EXT)
+    PLIST_SONAME = libplist-2.0.so.4
+endif
+
+# Library flags
 LIB_PATHS          = -L$(SDK_LIB_PATH) -L$(LZFSE_BUILD_DIR) -L$(PLIST_LIB_DIR) -L$(DPP_BUILD_DIR)
 LIBRARIES          = -l$(BELLA_SDK_NAME) -lm -ldl -llzfse $(PLIST_LIB) -ldpp -lsqlite3
 
@@ -113,7 +120,16 @@ $(OUTPUT_FILE): $(OBJECT_FILES)
 	@cp $(SDK_LIB_PATH)/$(SDK_LIB_FILE) $(BIN_DIR)/$(SDK_LIB_FILE)
 	@cp $(SDK_LIB_PATH)/$(USD_LIB_NAME) $(BIN_DIR)/$(USD_LIB_NAME)
 	@cp $(LZFSE_BUILD_DIR)/$(LZFSE_LIB_NAME) $(BIN_DIR)/$(LZFSE_LIB_NAME)
-	@cp $(PLIST_LIB_DIR)/$(PLIST_LIB_NAME) $(BIN_DIR)/
+	# Handle versioned libplist libraries (platform-agnostic)
+	@if [ -f $(PLIST_LIB_DIR)/$(PLIST_VERSIONED_FILE) ]; then \
+		cp $(PLIST_LIB_DIR)/$(PLIST_VERSIONED_FILE) $(BIN_DIR)/$(PLIST_VERSIONED_FILE); \
+		ln -sf $(PLIST_VERSIONED_FILE) $(BIN_DIR)/$(PLIST_LINK_NAME); \
+		if [ "$(PLATFORM)" != "Darwin" ]; then \
+			ln -sf $(PLIST_VERSIONED_FILE) $(BIN_DIR)/$(PLIST_SONAME); \
+		fi; \
+	else \
+		cp $(PLIST_LIB_DIR)/$(PLIST_LINK_NAME) $(BIN_DIR)/$(PLIST_LINK_NAME); \
+	fi
 	# Handle versioned DPP libraries (platform-agnostic)
 	@if [ -f $(DPP_BUILD_DIR)/$(DPP_VERSIONED_FILE) ]; then \
 		cp $(DPP_BUILD_DIR)/$(DPP_VERSIONED_FILE) $(BIN_DIR)/$(DPP_VERSIONED_FILE); \
